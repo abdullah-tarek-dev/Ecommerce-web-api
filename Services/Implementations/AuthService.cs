@@ -5,6 +5,7 @@ using Ecommerce.Data;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
 using Ecommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -15,11 +16,13 @@ namespace ECommerce.Application.Services.Implementations
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public AuthService(AppDbContext context, IConfiguration config)
+        public AuthService(AppDbContext context, IConfiguration config , IPasswordHasher<User> passwordHasher)
         {
             _context = context;
             _config = config;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto dto)
